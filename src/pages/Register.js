@@ -38,7 +38,6 @@ const Register = () => {
 		return;
 	}
 	dispatch(registerUser({name, email, password}))
-    toast.success("Form submitted successfully!");
   };
 
   const toggleMember = () => {
@@ -70,7 +69,7 @@ const Register = () => {
           value={values.password}
           handleChange={handleChange}
         />
-        <button type="submit" className="btn btn-block">
+        <button type="submit" className="btn btn-block" disabled={isLoading}>
           submit
         </button>
         <p>
