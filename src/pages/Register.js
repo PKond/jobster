@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { registerUser, loginUser } from "../features/user/userSlice";
 import { Logo, FormRow } from "../components";
 import Wrapper from "../assets/wrappers/RegisterPage";
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser, registerUser } from "../features/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
@@ -15,8 +15,8 @@ const initialState = {
 
 const Register = () => {
   const [values, setValues] = useState(initialState);
-  const { user, isLoading } = useSelector((store) => store.user);
   const dispatch = useDispatch();
+  const { isLoading, user } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +30,6 @@ const Register = () => {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-
     setValues({ ...values, [name]: value });
   };
 
@@ -44,9 +43,10 @@ const Register = () => {
     }
 
     if (isMember) {
-      dispatch(loginUser({ email: email, password: password }));
+      dispatch(loginUser({ email, password }));
       return;
     }
+
     dispatch(registerUser({ name, email, password }));
   };
 
